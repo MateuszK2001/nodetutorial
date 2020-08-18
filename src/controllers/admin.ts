@@ -34,14 +34,14 @@ export const getEditProduct = async (req:Request, res:Response, next:NextFunctio
 };
 export const postEditProduct = async (req:Request, res:Response, next:NextFunction) => {
     const id = req.params.id;
-    await Products.remove(id);
     const product = new Product({
         id: id,
         title: req.body.title, 
         description: req.body.description, 
         price: Number(req.body.price), 
         imgSrc: req.body.imgsrc});
-    Products.add(product);
+
+    await Products.update(product);
     res.redirect('/admin/products');
 };
 export const postDeleteProduct = async (req:Request, res:Response, next:NextFunction) => {

@@ -5,20 +5,23 @@
     <%- include('../includes/navigation.ejs') %> 
     <main>
 <%      if(cart.length > 0){      %>  
-            <ul>
+            <ul style="display: flex;">
 <%              cart.forEach(({product, cnt}) => { %>
-                    <li>
+                    <li style="flex-direction: column;flex-wrap: wrap;margin: auto 40px;">
+                       <img id="img" style="height: 20vw;display: block;" src="<%=product.imgSrc%>">
                         <p>
                             <%=`${product.title} (${cnt})`%>
                         </p>
-                        <form action="/cart-delete-item" method="POST">
-                            <input type="hidden" name="id" value="<%=product.id%>">
-                            <button class="btn" type="submit">Delete one</button>
-                        </form>
-                        <form action="/cart-delete-items" method="POST">
-                            <input type="hidden" name="id" value="<%=product.id%>">
-                            <button class="btn" type="submit">Delete all</button>
-                        </form>
+                        <div style="display: flex;justify-content: space-between;">
+                            <form action="/cart-delete-item" method="POST" style="flex-grow: 1;margin: 0 5px;">
+                                <input type="hidden" name="id" value="<%=product.id%>">
+                                <button type="submit" class="btn" style="width: 100%;">Delete one</button>
+                            </form>
+                            <form action="/cart-delete-items" method="POST" style="flex-grow: 1;margin: 0 5px;">
+                                <input type="hidden" name="id" value="<%=product.id%>">
+                                <button type="submit" class="btn" style="width: 100%;">Delete all</button>
+                            </form>
+                        </div>
                     </li>
 <%              }) %>    
             </ul>

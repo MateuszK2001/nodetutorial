@@ -43,7 +43,7 @@ export default class Cart{
     static async removeProducts(id:string, singlePrice: number){
         const cart = await Cart.loadCart();
         if(cart.productsId[id] === undefined || cart.productsId[id] === 0){
-            throw new Error('ERROR: Cart remove - product id undefined or equal 0');
+            return;
         }
         cart.totalPrice -= (singlePrice*cart.productsId[id]);
         delete cart.productsId[id];
