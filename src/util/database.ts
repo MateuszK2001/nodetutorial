@@ -1,14 +1,9 @@
-import * as mysql from 'mysql2';
- 
-// Create the connection pool. The pool-specific settings are the defaults
-const TutorialDatabasePool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  database: 'tutorial',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  password: 'Qweqwe12321'
-}).promise();
+import {Sequelize} from 'sequelize';
 
-export default TutorialDatabasePool;
+const TutorialSequelize = new Sequelize('tutorial', 'root', 'Qweqwe12321', {
+  dialect: 'mysql',
+  host:'localhost'
+});
+
+
+export default TutorialSequelize;

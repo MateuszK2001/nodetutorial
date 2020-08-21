@@ -11,7 +11,7 @@
         const title = editingMode ? product.title : "";
         const description = editingMode ? product.description : "";
         const price = editingMode ? product.price : "";
-        const imgSrc = editingMode ? product.imgSrc : "";
+        const imageUrl = editingMode ? product.imageUrl : "";
     %>
     <main>
         <form class="product-form" action="<%=requestPath%>" method="POST">
@@ -28,16 +28,16 @@
                 <input type="number" name="price" id="price" step="0.01" value="<%=price%>">
             </div>
             <div class="form-control">
-                <label for="imgsrc">Image Source</label>
-                <input type="url" name="imgsrc" id="imgsrc" value="<%=imgSrc%>">
-                <img id="img" style="margin: auto;width: 100%;display: block;" src="<%=imgSrc%>">
+                <label for="imageUrl">Image Source</label>
+                <input type="url" name="imageUrl" id="imageUrl" value="<%=imageUrl%>">
+                <img id="img" style="margin: auto;width: 100%;display: block;" src="<%=imageUrl%>">
             </div>
             <button class="btn" type="submit"><%=editingMode ? "Update" : "Add Product"%></button>
         </form>
     </main>
     <script>
         const img = document.getElementById('img');
-        document.getElementById('imgsrc').addEventListener("input", e=>{
+        document.getElementById('imageUrl').addEventListener("input", e=>{
             img.src = e.target.value;
         });
     </script>

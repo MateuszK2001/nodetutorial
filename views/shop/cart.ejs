@@ -4,13 +4,14 @@
 <body>
     <%- include('../includes/navigation.ejs') %> 
     <main>
-<%      if(cart.length > 0){      %>  
+        <h1 style="text-align: center;">Price: $<%=price%></h1>
+<%      if(products.length > 0){      %>  
             <ul style="display: flex;">
-<%              cart.forEach(({product, cnt}) => { %>
+<%              products.forEach((product) => { %>
                     <li style="flex-direction: column;flex-wrap: wrap;margin: auto 40px;">
-                       <img id="img" style="height: 20vw;display: block;" src="<%=product.imgSrc%>">
+                       <img id="img" style="height: 20vw;display: block;" src="<%=product.imageUrl%>">
                         <p>
-                            <%=`${product.title} (${cnt})`%>
+                            <%=`${product.title} (${product.cartItem.cnt})`%>
                         </p>
                         <div style="display: flex;justify-content: space-between;">
                             <form action="/cart-delete-item" method="POST" style="flex-grow: 1;margin: 0 5px;">
@@ -25,6 +26,12 @@
                     </li>
 <%              }) %>    
             </ul>
+            <hr>
+            <div class="centered">
+                <form action="/create-order" method="POST">
+                    <button type="submit" class="btn">Order Now!</button>
+                </form>
+            </div>
 <%      } 
         else{                     %>
             <h1>No products in cart</h1>

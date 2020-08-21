@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.0.27",
+    "@types/validator": "^13.1.0",
     "nodemon": "^2.0.4",
     "npm-run-all": "^4.1.5",
     "ts-loader": "^8.0.2",
@@ -32,6 +33,7 @@
     "express-handlebars": "^5.1.0",
     "mysql2": "^2.1.0",
     "pug": "^3.0.0",
+    "sequelize": "^6.3.4",
     "uuid": "^8.3.0"
   }
 }

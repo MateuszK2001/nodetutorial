@@ -1,27 +1,25 @@
-import { Model, Optional, DataTypes, HasManyGetAssociationsMixin, HasManyAddAssociationMixin, HasManyHasAssociationMixin, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin, Association, BelongsToGetAssociationMixin, HasManyRemoveAssociationsMixin, HasManySetAssociationsMixin } from 'sequelize';
+import { Model, Optional, DataTypes, HasManyGetAssociationsMixin, HasManyAddAssociationMixin, HasManyHasAssociationMixin, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin, BelongsToGetAssociationMixin, Association, HasManyAddAssociationsMixin } from 'sequelize';
 import TutorialSequelize from '../util/database';
 import Product from './product';
 import User from './user';
 
 
-export interface CartAttributes{
-    id:number,
-    ownerId:number
+export interface OrderAttributes{
+    id:number;
+    ownerId:number;
 }
-interface CartCreationAttributes extends Optional<CartAttributes, "id"> {}
+interface OrderCreationAttributes extends Optional<OrderAttributes, "id"> {}
 
-class Cart extends Model<CartAttributes, CartCreationAttributes> implements CartAttributes{
-    id!: number;
-    ownerId!: number;
-    
+class Order extends Model<OrderAttributes, OrderCreationAttributes> implements OrderAttributes{
+    id!:number;
+    ownerId!:number;
     // timestamps!
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 
-    public removeProducts!: HasManyRemoveAssociationsMixin<Product, number>;
-    public setProducts!: HasManySetAssociationsMixin<Product, number>;
     public getProducts!: HasManyGetAssociationsMixin<Product>;
     public addProduct!: HasManyAddAssociationMixin<Product, number>;
+    public addProducts!: HasManyAddAssociationsMixin<Product, number>;
     public hasProduct!: HasManyHasAssociationMixin<Product, number>;
     public countProducts!: HasManyCountAssociationsMixin;
     public createProduct!: HasManyCreateAssociationMixin<Product>;
@@ -31,11 +29,11 @@ class Cart extends Model<CartAttributes, CartCreationAttributes> implements Cart
     public readonly owner?: User;
 
     public static associations: {
-        products: Association<Cart, Product>;
-        owner: Association<Cart, User>;
+        products: Association<Order, Product>;
+        owner: Association<Order, User>;
     };
 }
-Cart.init({
+Order.init({
     id:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -45,13 +43,13 @@ Cart.init({
     ownerId:{
         type: DataTypes.INTEGER,
         allowNull: false
-    }
+    },
 },{
     sequelize: TutorialSequelize,
-    tableName: 'cart',
-    // freezeTableName: true
-})
+    tableName: 'orders',
+});
 
 
 
-export default Cart;
+export default Order;
+
