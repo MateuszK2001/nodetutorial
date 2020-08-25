@@ -1,0 +1,19 @@
+{
+    "_id": {
+        "$oid": "5f40feac77514e76dd49950b"
+    },
+    "name": "Max",
+    "email": "kolonko@kretyn.us",
+    "cart": {
+        "products": [
+            {
+                "productId": {
+                    "$oid": "5f40f79f3b324fbaf85567a5"
+                },
+                "cnt": {
+                    "$numberInt": "1"
+                }
+            }
+        ]
+    }
+}

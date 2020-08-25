@@ -7,7 +7,7 @@
     <%- include('../includes/navigation.ejs') %> 
     <%
         const editingMode = typeof product !== 'undefined';
-        const requestPath = editingMode ? `/admin/edit-product/${product.id}` : "/admin/add-product";
+        const requestPath = editingMode ? `/admin/edit-product/${product._id}` : "/admin/add-product";
         const title = editingMode ? product.title : "";
         const description = editingMode ? product.description : "";
         const price = editingMode ? product.price : "";

@@ -9,7 +9,7 @@ shopRouter.get('/cart', ShopController.getCart);
 shopRouter.post('/cart', ShopController.postCart);
 shopRouter.post('/cart-delete-item', ShopController.postCartDeleteItem);
 shopRouter.post('/cart-delete-items', ShopController.postCartDeleteItems);
-shopRouter.get('/checkout', ShopController.getCheckout);
+// shopRouter.get('/checkout', ShopController.getCheckout);
 shopRouter.get('/orders', ShopController.getOrders);
 shopRouter.post('/create-order', ShopController.postCreateOrder);
 export default shopRouter;

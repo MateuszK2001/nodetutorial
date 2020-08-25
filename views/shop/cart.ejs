@@ -7,19 +7,19 @@
         <h1 style="text-align: center;">Price: $<%=price%></h1>
 <%      if(products.length > 0){      %>  
             <ul style="display: flex;">
-<%              products.forEach((product) => { %>
+<%              products.forEach(({product, cnt}) => { %>
                     <li style="flex-direction: column;flex-wrap: wrap;margin: auto 40px;">
                        <img id="img" style="height: 20vw;display: block;" src="<%=product.imageUrl%>">
                         <p>
-                            <%=`${product.title} (${product.cartItem.cnt})`%>
+                            <%=`${product.title} (${cnt})`%>
                         </p>
                         <div style="display: flex;justify-content: space-between;">
                             <form action="/cart-delete-item" method="POST" style="flex-grow: 1;margin: 0 5px;">
-                                <input type="hidden" name="id" value="<%=product.id%>">
+                                <input type="hidden" name="id" value="<%=product._id%>">
                                 <button type="submit" class="btn" style="width: 100%;">Delete one</button>
                             </form>
                             <form action="/cart-delete-items" method="POST" style="flex-grow: 1;margin: 0 5px;">
-                                <input type="hidden" name="id" value="<%=product.id%>">
+                                <input type="hidden" name="id" value="<%=product._id%>">
                                 <button type="submit" class="btn" style="width: 100%;">Delete all</button>
                             </form>
                         </div>

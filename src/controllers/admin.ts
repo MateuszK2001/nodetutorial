@@ -1,5 +1,7 @@
 import { NextFunction, Response, Request } from "express";
 import Product from "../models/product";
+import { ObjectId } from "mongodb";
+
 
 
 export const getAddProduct = (req:Request, res:Response, next:NextFunction) => {
@@ -9,16 +11,17 @@ export const getAddProduct = (req:Request, res:Response, next:NextFunction) => {
 };
 export const postAddProduct = async (req:Request, res:Response, next:NextFunction) => {
     const imageUrl:string = String(req.body.imageUrl).trim();
-    await req.user.createProduct({
-        title: req.body.title, 
-        description: req.body.description, 
-        price: Number(req.body.price), 
-        imageUrl: imageUrl.length>0?imageUrl:undefined,
-    });
+    const newProduct = new Product(
+        req.body.title,
+        Number(req.body.price), 
+        req.body.description, 
+        imageUrl.length>0?imageUrl:undefined,
+        req.user._id!);
+    await newProduct.save();
     res.redirect('/');
 };
 export const getAdminProducts = async (req:Request, res:Response, next:NextFunction) => {
-    const products =  await req.user.getProducts();
+    const products =  await Product.fetchAll();
     res.render('admin/products', {
         products: products, 
         docTitle: 'Admin Products', 
@@ -26,9 +29,9 @@ export const getAdminProducts = async (req:Request, res:Response, next:NextFunct
     });
 };
 export const getEditProduct = async (req:Request, res:Response, next:NextFunction) => {
-    const id = req.params.id;
-    const product = (await req.user.getProducts({where: {id: id}})).find(()=>true);
-    if(product === undefined){
+    const id = new ObjectId(req.params.id);
+    const product = await Product.findById(id);
+    if(!product){
         console.log("ERROR: admin: getEditProduct --- product not found");
         res.redirect('/');
         return;
@@ -39,29 +42,21 @@ export const getEditProduct = async (req:Request, res:Response, next:NextFunctio
         product: product});
 };
 export const postEditProduct = async (req:Request, res:Response, next:NextFunction) => {
-    const id = req.params.id;
-    const product = (await req.user.getProducts({where: {id: id}})).find(()=>true);
-    if(product === undefined){
-        console.log("ERROR: admin: postEditProduct --- product not found");
-        res.redirect('/');
-        return;
-    }
-    await product.update({
-        title: req.body.title, 
-        description: req.body.description, 
-        price: Number(req.body.price), 
-        imageUrl: req.body.imageUrl
-    });
+    const id = new ObjectId(req.params.id);
+    const product = new Product(
+        req.body.title,
+        Number(req.body.price),
+        req.body.description,
+        req.body.imageUrl,
+        req.user._id!,
+        id);
+    await product.save();
+
     res.redirect('/admin/products');
 };
 export const postDeleteProduct = async (req:Request, res:Response, next:NextFunction) => {
-    const id = req.params.id;
-    const product = (await req.user.getProducts({where: {id: id}})).find(()=>true);
-    if(product === undefined){
-        console.log("ERROR: admin: postDeleteProduct --- product not found");
-        res.redirect('/');
-        return;
-    }
-    await product.destroy();
+    const id = new ObjectId(req.params.id);
+
+    await Product.deleteById(id);
     res.redirect('/admin/products');
 }
